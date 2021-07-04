@@ -2,6 +2,7 @@
 # pickHelper.py
 # Calculates and lists the best and the worst heroes you could pick in a given draft, along with the reasons why
 
+#TODO: refactor the spacing of the output. rename the variables summaryPre and reasonPre to make more sense.
 
 import pickle,string
 # import the data
