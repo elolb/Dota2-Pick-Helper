@@ -2,7 +2,6 @@
 # pickHelper.py
 # Calculates and lists the best and the worst heroes you could pick in a given draft, along with the reasons why
 
-#TODO: refactor the spacing of the output. rename the variables summaryPre and reasonPre to make more sense.
 
 import pickle,string
 # import the data
@@ -47,8 +46,8 @@ while 1:
             #check who is bad against them-> bad pick  -7
             goodSummary={}
             badSummary={}
-            summaryPre="\n\n- " # for each summary line, use new lines and hyphen
-            reasonPre="\n  "
+            reasonPre="\n\n- " # for each summary line, use new lines and hyphen
+            detailPre="\n"
             for enemy in enemyList:
                    for hero in badAgainstDict[enemy]:
                         if hero in pick:
@@ -57,10 +56,10 @@ while 1:
                             pick[hero]=5
                         
                         if hero in goodSummary:
-                            goodSummary[hero]+=summaryPre+hero+" is good against "+enemy
+                            goodSummary[hero]+=reasonPre+hero+" is good against "+enemy
                         else:
-                            goodSummary[hero]=summaryPre+hero+" is good against "+enemy
-                        goodSummary[hero]+=reasonPre+badAgainstDict[enemy][hero]
+                            goodSummary[hero]=reasonPre+hero+" is good against "+enemy
+                        goodSummary[hero]+=detailPre+badAgainstDict[enemy][hero]
                         
             #           print("made "+hero+" increase bcs "+enemy+" is bad against it")
                         
@@ -72,22 +71,22 @@ while 1:
                         else:
                             pick[hero]=2
                         if hero in goodSummary:
-                            goodSummary[hero]+=summaryPre+hero+" would be good with their "+enemy+" if they picked it"
+                            goodSummary[hero]+=reasonPre+hero+" would be good with their "+enemy+" if they picked it"
                         else:
-                            goodSummary[hero]=summaryPre+hero+" would be good with their "+enemy+" if they picked it"
+                            goodSummary[hero]=reasonPre+hero+" would be good with their "+enemy+" if they picked it"
              #          print("made "+hero+" increase bcs its good with "+enemy)
-                        goodSummary[hero]+=reasonPre+worksWellDict[enemy][hero]
+                        goodSummary[hero]+=detailPre+worksWellDict[enemy][hero]
                    for hero in goodAgainstDict[enemy]:
                         if hero in pick:
                             pick[hero]-=7
                         else:
                             pick[hero]=-7
                         if hero in badSummary:
-                            badSummary[hero]+=summaryPre+hero+" is bad against "+enemy
+                            badSummary[hero]+=reasonPre+hero+" is bad against "+enemy
                         else:
-                            badSummary[hero]=summaryPre+hero+" is bad against "+enemy
+                            badSummary[hero]=reasonPre+hero+" is bad against "+enemy
             #           print("made "+hero+" decrease bcs "+enemy+" is good against it")
-                        badSummary[hero]+=reasonPre+goodAgainstDict[enemy][hero]
+                        badSummary[hero]+=detailPre+goodAgainstDict[enemy][hero]
             # for ally
             #check what works well with them-> good pick +5
             #check what's good against them-> good pick +3
@@ -100,33 +99,33 @@ while 1:
                         else:
                             pick[hero]=3
                         if hero in goodSummary:
-                            goodSummary[hero]+=summaryPre+"If enemy picked "+hero+" against "+ally+" it could be bad"
+                            goodSummary[hero]+=reasonPre+"If enemy picked "+hero+" against "+ally+" it could be bad"
                         else:
-                            goodSummary[hero]=summaryPre+"If enemy picked "+hero+" against "+ally+" it could be bad"
+                            goodSummary[hero]=reasonPre+"If enemy picked "+hero+" against "+ally+" it could be bad"
             #           print("made "+hero+" increase bcs it is good against "+ally)
-                        goodSummary[hero]+=reasonPre+badAgainstDict[ally][hero]
+                        goodSummary[hero]+=detailPre+badAgainstDict[ally][hero]
                    for hero in worksWellDict[ally]:
                         if hero in pick:
                             pick[hero]+=5
                         else:
                             pick[hero]=5
                         if hero in goodSummary:
-                            goodSummary[hero]+=summaryPre+hero+" is good with "+ally
+                            goodSummary[hero]+=reasonPre+hero+" is good with "+ally
                         else:
-                            goodSummary[hero]=summaryPre+hero+" is good with "+ally
+                            goodSummary[hero]=reasonPre+hero+" is good with "+ally
             #           print("made "+hero+" increase bcs it is good with "+ally)
-                        goodSummary[hero]+=reasonPre+worksWellDict[ally][hero]
+                        goodSummary[hero]+=detailPre+worksWellDict[ally][hero]
                    for hero in goodAgainstDict[ally]:
                         if hero in pick:
                             pick[hero]-=1
                         else:
                             pick[hero]=-1
                         if hero in badSummary:
-                            badSummary[hero]+=summaryPre+"Better if enemy picks it since "+ally+" is good against it"
+                            badSummary[hero]+=reasonPre+"Better if enemy picks it since "+ally+" is good against it"
                         else:
-                            badSummary[hero]=summaryPre+"Better if enemy picks it since "+ally+" is good against it"
+                            badSummary[hero]=reasonPre+"Better if enemy picks it since "+ally+" is good against it"
                        
-                        badSummary[hero]+=reasonPre+goodAgainstDict[ally][hero]
+                        badSummary[hero]+=detailPre+goodAgainstDict[ally][hero]
             #           print("made "+hero+" decrease bcs " +ally+ " is good against it, so it's better if enemy picks it")   
             ascendingPick={k: v for k, v in sorted(pick.items(), key=lambda item: item[1])}
             print(ascendingPick)
@@ -137,16 +136,16 @@ while 1:
                 elif ascendingPick[key]>0:
                     goodPick.append(key)
             goodPick.reverse()
-            print("\n\nDONT PICK THESE:\n")
+            print("\n\n//// DON\'T PICK THESE ////\n")
             
 # show only top 3 for bad pick, top 7 for good pick
             for pick in badPick[0:3]:
-                print("\t"+pick+"\n")
+                print("\t"+pick)
                 print("\n"+badSummary[pick]+"\n\n")
                 
-            print("\n\nPICK THESE:\n")
+            print("\n\n//// PICK THESE ////\n")
             for pick in goodPick[0:7]:
-                print("\t"+pick+"\n")
+                print("\t"+pick)
                 print("\n"+goodSummary[pick]+"\n\n")
 
 # reset for new draft
