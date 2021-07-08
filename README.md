@@ -11,6 +11,10 @@ This console application uses information on the counter pages at the Dota 2 Fan
  2. Run pickHelper.py. You can enter as many heroes as you want. You need to enter the hero's full name but it is case-insensitive so no need to capitalize.
 
 # Example
+![image](https://user-images.githubusercontent.com/75650001/124921170-cbdfdd80-e000-11eb-8c07-b3efc9e5cd43.png)
+
+scraper.py output
+
 ![image](https://user-images.githubusercontent.com/75650001/124483321-defd6e00-ddb2-11eb-9245-8a7855f9844c.png)
 
 Entering some enemy and ally heroes.
